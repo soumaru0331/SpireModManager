@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spire Mod Manager — Slay the Spire 2 MOD マネージャー</title>
-<meta name="description" content="Slay the Spire 2（Steam）の無料 MOD マネージャー。Workshop と Nexus Mods から 1 クリックで導入、前提 MOD は自動、エラーの原因も表示。安定版とベータ版はダウンロードなしで切り替え。">
+<title>Tsumiki — Slay the Spire 2 MOD マネージャー</title>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<meta name="description" content="Tsumiki（ツミキ）は Slay the Spire 2（Steam）の無料 MOD マネージャー。Workshop と Nexus Mods から 1 クリックで導入、前提 MOD は自動、エラーの原因も表示。安定版とベータ版はダウンロードなしで切り替え。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -24,7 +25,11 @@ img{max-width:100%;height:auto;display:block}
 .nav{position:sticky;top:0;z-index:20;background:rgba(20,18,16,.82);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.04)}
 .nav .wrap{display:flex;align-items:center;gap:8px;height:68px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;text-decoration:none;margin-right:12px}
-.logo svg{width:26px;height:26px;color:var(--gold)}
+.logo img{width:30px;height:30px}
+.logo{font-size:19px;letter-spacing:.02em}
+.brandmark{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:22px}
+.brandmark img{width:72px;height:72px;filter:drop-shadow(0 8px 24px rgba(231,181,78,.25))}
+.brandmark span{font-weight:800;font-size:15px;letter-spacing:.22em;color:var(--dim)}
 .links{display:flex;gap:4px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:4px}
 .links a{text-decoration:none;color:var(--dim);font-size:14px;font-weight:500;padding:6px 14px;border-radius:9px}
 .links a:hover{color:var(--text);background:var(--panel)}
@@ -138,7 +143,7 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
 
 <nav class="nav">
   <div class="wrap">
-    <a class="logo" href="#"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 L20 10 L18 10 L18 30 L14 30 L14 10 L12 10 Z" fill="currentColor"/><path d="M9 30h14" stroke="currentColor" stroke-width="2"/></svg>Spire Mod Manager</a>
+    <a class="logo" href="#"><img src="logo.svg" alt="" width="30" height="30">Tsumiki</a>
     <div class="links">
       <a href="#features"><span class="ja">機能</span><span class="en">Features</span></a>
       <a href="#trailer"><span class="ja">トレーラー</span><span class="en">Trailer</span></a>
@@ -156,6 +161,7 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
 
 <header class="hero">
   <div class="wrap">
+    <div class="brandmark"><img src="logo.svg" alt="Tsumiki"><span>TSUMIKI ・ ツミキ</span></div>
     <h1 class="ja">Slay the Spire 2<br><span class="hl">MOD マネージャー</span></h1>
     <h1 class="en">The <span class="hl">mod manager</span><br>for Slay the Spire 2</h1>
     <p class="ja">Workshop と Nexus Mods から 1 クリックで導入。前提 MOD は自動で入り、動かないときは原因と直し方を教えてくれます。無料です。</p>
@@ -166,7 +172,7 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
     </a>
     <div class="ver"><b class="verno">最新版</b> &nbsp;|&nbsp; Windows 10+ &nbsp;|&nbsp; <span class="ja">インストール不要</span><span class="en">No install</span></div>
     <div class="shot">
-      <div class="frame"><div class="bar"><i></i><i></i><i></i></div><img src="img/mods.png" alt="Spire Mod Manager の MOD 一覧画面" width="1920" height="1200"></div>
+      <div class="frame"><div class="bar"><i></i><i></i><i></i></div><img src="img/mods.png" alt="Tsumiki の MOD 一覧画面" width="1920" height="1200"></div>
     </div>
   </div>
 </header>
@@ -287,7 +293,7 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
     </div>
     <div class="cmp">
       <table>
-        <thead><tr><th></th><th class="us">Spire Mod Manager</th><th class="ja">Workshop だけ</th><th class="en">Workshop only</th><th class="ja">手で入れる</th><th class="en">By hand</th></tr></thead>
+        <thead><tr><th></th><th class="us">Tsumiki</th><th class="ja">Workshop だけ</th><th class="en">Workshop only</th><th class="ja">手で入れる</th><th class="en">By hand</th></tr></thead>
         <tbody>
           <tr><td class="ja">前提 MOD の自動導入</td><td class="en">Auto-install requirements</td><td class="us y">○</td><td class="p">△</td><td class="n">×</td></tr>
           <tr><td class="ja">Nexus Mods から導入</td><td class="en">Install from Nexus Mods</td><td class="us y">○</td><td class="n">×</td><td class="p">△</td></tr>
@@ -348,8 +354,8 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
 
 <footer>
   <div class="wrap">
-    <span class="ja">作者: えす ・ 非公式のファンツールです。Mega Crit とは関係ありません。Slay the Spire は Mega Crit の商標です。</span>
-    <span class="en">By esu · An unofficial fan tool, not affiliated with Mega Crit. Slay the Spire is a trademark of Mega Crit.</span>
+    <span class="ja">Tsumiki（ツミキ） ・ 作者: えす ・ 非公式のファンツールです。Mega Crit とは関係ありません。Slay the Spire は Mega Crit の商標です。</span>
+    <span class="en">Tsumiki · By esu · An unofficial fan tool, not affiliated with Mega Crit. Slay the Spire is a trademark of Mega Crit.</span>
     <a href="https://github.com/soumaru0331/SpireModManager/releases"><span class="ja">これまでのバージョン</span><span class="en">All versions</span></a>
   </div>
 </footer>
