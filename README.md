@@ -1,7 +1,5 @@
 # Tsumiki（ツミキ）
 
-<img src="docs/logo.svg" width="96" alt="Tsumiki">
-
 Slay the Spire 2（Steam 版）の MOD マネージャーです（旧名: Spire Mod Manager）。作者: えす
 
 配布ページ: https://soumaru0331.github.io/Tsumiki/
