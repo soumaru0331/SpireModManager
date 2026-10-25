@@ -8,7 +8,7 @@
 <meta name="description" content="Tsumiki（ツミキ）は Slay the Spire 2（Steam）の無料 MOD マネージャー。Workshop と Nexus Mods から 1 クリックで導入、前提 MOD は自動、エラーの原因も表示。安定版とベータ版はダウンロードなしで切り替え。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kreon:wght@700&family=M+PLUS+1p:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#141210; --bg2:#1a1714; --panel:#211d19; --line:#332c24; --text:#f1e9dc; --dim:#b2a693; --faint:#7f7464;
@@ -26,10 +26,11 @@ img{max-width:100%;height:auto;display:block}
 .nav .wrap{display:flex;align-items:center;gap:8px;height:68px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;text-decoration:none;margin-right:12px}
 .logo img{width:30px;height:30px}
-.logo{font-size:19px;letter-spacing:.02em}
+.logo{font-family:Kreon,serif;font-size:21px;letter-spacing:.06em;color:#f3d58a;text-transform:uppercase}
 .brandmark{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:22px}
-.brandmark img{width:72px;height:72px;filter:drop-shadow(0 8px 24px rgba(231,181,78,.25))}
-.brandmark span{font-weight:800;font-size:15px;letter-spacing:.22em;color:var(--dim)}
+.brandmark img{width:96px;height:96px;filter:drop-shadow(0 8px 28px rgba(255,90,54,.28))}
+.brandmark span{font-family:Kreon,serif;font-weight:700;font-size:30px;letter-spacing:.08em;color:#f3d58a;-webkit-text-stroke:1px #1a1210;paint-order:stroke fill;text-shadow:0 3px 0 #1a1210,0 0 18px rgba(231,181,78,.25)}
+.brandmark small{font-weight:700;font-size:13px;letter-spacing:.3em;color:var(--dim)}
 .links{display:flex;gap:4px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:4px}
 .links a{text-decoration:none;color:var(--dim);font-size:14px;font-weight:500;padding:6px 14px;border-radius:9px}
 .links a:hover{color:var(--text);background:var(--panel)}
@@ -149,11 +150,11 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
       <a href="#trailer"><span class="ja">トレーラー</span><span class="en">Trailer</span></a>
       <a href="#how"><span class="ja">使い方</span><span class="en">How to</span></a>
       <a href="#faq">FAQ</a>
-      <a href="https://github.com/soumaru0331/SpireModManager">GitHub</a>
+      <a href="https://github.com/soumaru0331/Tsumiki">GitHub</a>
     </div>
     <span class="sp"></span>
     <button class="lang" id="lang" type="button">English</button>
-    <a class="dl-sm dl-link" href="https://github.com/soumaru0331/SpireModManager/releases/latest/download/SpireModManager.exe">
+    <a class="dl-sm dl-link" href="https://github.com/soumaru0331/Tsumiki/releases/latest/download/Tsumiki.exe">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.5 4.4v7.1H3zm8.5-1.2L21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zm8.5 0H21V21l-9.5-1.3z"/></svg><span class="t ja">ダウンロード</span><span class="t en">Download</span>
     </a>
   </div>
@@ -161,12 +162,12 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
 
 <header class="hero">
   <div class="wrap">
-    <div class="brandmark"><img src="logo.svg" alt="Tsumiki"><span>TSUMIKI ・ ツミキ</span></div>
+    <div class="brandmark"><img src="logo.svg" alt="Tsumiki"><span>TSUMIKI</span><small>ツミキ</small></div>
     <h1 class="ja">Slay the Spire 2<br><span class="hl">MOD マネージャー</span></h1>
     <h1 class="en">The <span class="hl">mod manager</span><br>for Slay the Spire 2</h1>
     <p class="ja">Workshop と Nexus Mods から 1 クリックで導入。前提 MOD は自動で入り、動かないときは原因と直し方を教えてくれます。無料です。</p>
     <p class="en">Install from Workshop and Nexus Mods in one click. Requirements install themselves, and when something breaks it tells you why and how to fix it. Free.</p>
-    <a class="dl dl-link" href="https://github.com/soumaru0331/SpireModManager/releases/latest/download/SpireModManager.exe">
+    <a class="dl dl-link" href="https://github.com/soumaru0331/Tsumiki/releases/latest/download/Tsumiki.exe">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.5 4.4v7.1H3zm8.5-1.2L21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zm8.5 0H21V21l-9.5-1.3z"/></svg>
       <span class="ja">Windows 版をダウンロード</span><span class="en">Download for Windows</span>
     </a>
@@ -312,7 +313,7 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
   <div class="wrap">
     <div class="head"><h2 class="ja">使い方</h2><h2 class="en">Getting started</h2><p class="ja">インストールはいりません。</p><p class="en">No installation.</p></div>
     <div class="steps">
-      <div class="step"><div class="num">STEP 1</div><h3 class="ja">ダウンロード</h3><h3 class="en">Download</h3><p class="ja">SpireModManager.exe を保存します。</p><p class="en">Save SpireModManager.exe.</p></div>
+      <div class="step"><div class="num">STEP 1</div><h3 class="ja">ダウンロード</h3><h3 class="en">Download</h3><p class="ja">Tsumiki.exe を保存します。</p><p class="en">Save Tsumiki.exe.</p></div>
       <div class="step"><div class="num">STEP 2</div><h3 class="ja">開く</h3><h3 class="en">Open</h3><p class="ja">「WindowsによってPCが保護されました」と出たら「詳細情報」→「実行」。</p><p class="en">If "Windows protected your PC" shows, click "More info" → "Run anyway".</p></div>
       <div class="step"><div class="num">STEP 3</div><h3 class="ja">遊ぶ</h3><h3 class="en">Play</h3><p class="ja">ゲームは自動で見つかります。MOD を選んで「起動」。</p><p class="en">It finds the game for you. Pick mods and press Launch.</p></div>
     </div>
@@ -344,7 +345,7 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
   <div class="wrap">
     <h2 class="ja">さっそく使ってみる</h2><h2 class="en">Give it a try</h2>
     <p class="ja">無料です。1 分で使い始められます。</p><p class="en">Free. Up and running in a minute.</p>
-    <a class="dl dl-link" href="https://github.com/soumaru0331/SpireModManager/releases/latest/download/SpireModManager.exe">
+    <a class="dl dl-link" href="https://github.com/soumaru0331/Tsumiki/releases/latest/download/Tsumiki.exe">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.5 4.4v7.1H3zm8.5-1.2L21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zm8.5 0H21V21l-9.5-1.3z"/></svg>
       <span class="ja">Windows 版をダウンロード</span><span class="en">Download for Windows</span>
     </a>
@@ -356,7 +357,7 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
   <div class="wrap">
     <span class="ja">Tsumiki（ツミキ） ・ 作者: えす ・ 非公式のファンツールです。Mega Crit とは関係ありません。Slay the Spire は Mega Crit の商標です。</span>
     <span class="en">Tsumiki · By esu · An unofficial fan tool, not affiliated with Mega Crit. Slay the Spire is a trademark of Mega Crit.</span>
-    <a href="https://github.com/soumaru0331/SpireModManager/releases"><span class="ja">これまでのバージョン</span><span class="en">All versions</span></a>
+    <a href="https://github.com/soumaru0331/Tsumiki/releases"><span class="ja">これまでのバージョン</span><span class="en">All versions</span></a>
   </div>
 </footer>
 
@@ -373,11 +374,11 @@ document.querySelectorAll(".vtabs button").forEach(b => b.onclick = () => {
   document.querySelectorAll(".vtabs button").forEach(x => x.classList.toggle("on", x === b));
   document.getElementById("yt").src = "https://www.youtube-nocookie.com/embed/" + b.dataset.v;
 });
-fetch("https://api.github.com/repos/soumaru0331/SpireModManager/releases/latest", {headers:{Accept:"application/vnd.github+json"}})
+fetch("https://api.github.com/repos/soumaru0331/Tsumiki/releases/latest", {headers:{Accept:"application/vnd.github+json"}})
   .then(r => r.ok ? r.json() : Promise.reject(r.status))
   .then(rel => {
     document.querySelectorAll(".verno").forEach(e => e.textContent = rel.tag_name);
-    const exe = (rel.assets || []).find(a => a.name === "SpireModManager.exe");
+    const exe = (rel.assets || []).find(a => a.name === "Tsumiki.exe");
     if (exe) document.querySelectorAll(".dl-link").forEach(a => a.href = exe.browser_download_url);
   }).catch(() => {});
 </script>
