@@ -3,189 +3,358 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spire Mod Manager</title>
-<meta name="description" content="Slay the Spire 2（Steam）の MOD をかんたんに管理する Windows 用ツール。MOD のオン・オフ、前提 MOD の自動導入、エラー診断、プロファイル、日本語化、セーブの自動バックアップ。">
+<title>Spire Mod Manager — Slay the Spire 2 の MOD マネージャー</title>
+<meta name="description" content="Slay the Spire 2（Steam）の無料 MOD マネージャー。Workshop と Nexus Mods から 1 クリックで導入、前提 MOD は自動、エラーの原因も表示。安定版とベータ版はダウンロードなしで切り替え。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#13110f; --panel:#1c1916; --panel2:#24201b; --line:#3a332a; --text:#efe6d8; --dim:#b3a794; --faint:#857a6a;
-  --gold:#e0b04a; --gold2:#f3cf78; --red:#c8553d; --green:#7fb069; --violet:#b8a3e6;
-}
-@media (prefers-color-scheme: light){
-  :root:not([data-theme="dark"]){
-    --bg:#f7f2ea; --panel:#fffdf9; --panel2:#f1e9dc; --line:#e2d6c3; --text:#2a231b; --dim:#6a5d4c; --faint:#8d806e;
-    --gold:#a8741a; --gold2:#8a5d10; --red:#a8402b; --green:#4f7d3a; --violet:#6a52b0;
-  }
-}
-:root[data-theme="light"]{
-  --bg:#f7f2ea; --panel:#fffdf9; --panel2:#f1e9dc; --line:#e2d6c3; --text:#2a231b; --dim:#6a5d4c; --faint:#8d806e;
-  --gold:#a8741a; --gold2:#8a5d10; --red:#a8402b; --green:#4f7d3a; --violet:#6a52b0;
+  --bg:#141210; --bg2:#1a1714; --panel:#211d19; --line:#332c24; --text:#f1e9dc; --dim:#b2a693; --faint:#7f7464;
+  --gold:#e7b54e; --gold2:#f6d37f; --accent:#ffcf6b;
 }
 *{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--bg);color:var(--text);font:16px/1.75 "Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",sans-serif;-webkit-font-smoothing:antialiased}
-a{color:var(--gold2)}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
-header.top{display:flex;align-items:center;gap:12px;padding:18px 0}
-.mark{width:34px;height:34px;flex:none}
-.brand{font-weight:800;letter-spacing:.14em;font-size:15px;color:var(--gold2)}
-.spacer{flex:1}
-.toggle{border:1px solid var(--line);background:var(--panel);color:var(--dim);border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;cursor:pointer}
-.toggle:hover{color:var(--text)}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.8 "M PLUS 1p","Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 
-.hero{padding:56px 0 40px;display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center}
-.eyebrow{color:var(--gold);font-weight:700;letter-spacing:.18em;font-size:12px;text-transform:uppercase}
-h1{font-size:clamp(32px,5vw,52px);line-height:1.15;margin:10px 0 16px;letter-spacing:.01em}
-h1 em{font-style:normal;color:var(--gold2)}
-.lead{color:var(--dim);font-size:17px;max-width:34em}
-.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:26px}
-.btn{display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:14px 22px;font-weight:700;text-decoration:none;border:1px solid var(--line);color:var(--text);background:var(--panel)}
-.btn.primary{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1b140a;border-color:transparent;box-shadow:0 6px 24px rgba(224,176,74,.25)}
-.btn.primary:hover{filter:brightness(1.05)}
-.btn small{font-weight:600;opacity:.75}
-.meta{color:var(--faint);font-size:13px;margin-top:12px}
+/* ナビ */
+.nav{position:sticky;top:0;z-index:20;background:rgba(20,18,16,.82);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.04)}
+.nav .wrap{display:flex;align-items:center;gap:8px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;text-decoration:none;margin-right:12px}
+.logo svg{width:26px;height:26px;color:var(--gold)}
+.links{display:flex;gap:4px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:4px}
+.links a{text-decoration:none;color:var(--dim);font-size:14px;font-weight:500;padding:6px 14px;border-radius:9px}
+.links a:hover{color:var(--text);background:var(--panel)}
+.sp{flex:1}
+.lang{background:var(--bg2);border:1px solid var(--line);color:var(--dim);border-radius:10px;padding:7px 14px;font:inherit;font-size:14px;cursor:pointer}
+.lang:hover{color:var(--text)}
+.dl-sm{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#1d1408;text-decoration:none;font-weight:800;font-size:14px;border-radius:10px;padding:9px 16px}
+.dl-sm svg{width:15px;height:15px}
 
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px}
-.preview{padding:18px}
-.pv-head{display:flex;gap:8px;align-items:center;margin-bottom:12px}
-.pv-pill{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--dim)}
-.pv-pill.on{color:var(--green);border-color:color-mix(in srgb,var(--green) 45%,transparent)}
-.pv-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:var(--panel2);margin-top:8px}
-.pv-ic{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:var(--gold2);background:var(--bg);border:1px solid var(--line)}
-.pv-name{flex:1;font-weight:600;font-size:14px}
-.pv-name span{display:block;font-weight:400;font-size:12px;color:var(--faint)}
-.sw{width:38px;height:22px;border-radius:999px;background:var(--gold);position:relative;flex:none}
-.sw::after{content:"";position:absolute;right:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#1b140a}
-.sw.off{background:var(--line)}
-.sw.off::after{left:3px;right:auto;background:var(--faint)}
-.pv-note{margin-top:12px;font-size:13px;color:var(--dim);border-left:3px solid var(--violet);padding:4px 10px}
+/* ヒーロー */
+.hero{text-align:center;padding:84px 0 40px}
+.hero h1{font-size:clamp(36px,6.2vw,68px);line-height:1.12;margin:0 0 22px;font-weight:800;letter-spacing:-.01em}
+.hero h1 .hl{color:var(--accent)}
+.hero p{color:var(--dim);font-size:18px;max-width:640px;margin:0 auto}
+.dl{display:inline-flex;align-items:center;gap:12px;margin-top:34px;background:var(--gold);color:#1d1408;text-decoration:none;font-weight:800;font-size:18px;border-radius:12px;padding:16px 30px;box-shadow:0 10px 40px rgba(231,181,78,.28);transition:transform .15s}
+.dl:hover{transform:translateY(-1px)}
+.dl svg{width:20px;height:20px}
+.ver{color:var(--faint);font-size:14px;margin-top:14px}
+.ver b{color:var(--dim);font-weight:500}
 
-section{padding:48px 0;border-top:1px solid var(--line)}
-h2{font-size:26px;margin:0 0 8px}
-.sub{color:var(--dim);margin:0 0 24px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.feat{padding:18px 18px 16px}
-.feat .ico{font-size:22px}
-.feat h3{margin:8px 0 4px;font-size:16px}
-.feat p{margin:0;color:var(--dim);font-size:14px;line-height:1.65}
-.steps{counter-reset:s;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.step{padding:18px;position:relative}
-.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--gold);color:#1b140a;font-weight:800;margin-bottom:8px}
-.step h3{margin:0 0 4px;font-size:16px}
-.step p{margin:0;color:var(--dim);font-size:14px}
-details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:10px}
-summary{cursor:pointer;font-weight:700}
-details p{color:var(--dim);margin:8px 0 2px;font-size:15px}
-.notes{padding:18px 20px;white-space:pre-line;color:var(--dim);font-size:15px}
-.notes b{color:var(--text)}
-footer{padding:28px 0 48px;color:var(--faint);font-size:13px;border-top:1px solid var(--line)}
+/* スクリーンショット */
+.shot{position:relative;margin:56px auto 0;max-width:1100px}
+.shot::before{content:"";position:absolute;inset:8% -4% -6%;background:radial-gradient(60% 60% at 30% 40%,rgba(231,181,78,.35),transparent 70%),radial-gradient(50% 50% at 75% 60%,rgba(200,85,61,.32),transparent 70%);filter:blur(40px);z-index:0}
+.frame{position:relative;z-index:1;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 30px 80px rgba(0,0,0,.55);background:#0e0d0c}
+.frame .bar{height:30px;background:#1b1916;display:flex;align-items:center;gap:7px;padding:0 12px;border-bottom:1px solid rgba(255,255,255,.05)}
+.frame .bar i{width:10px;height:10px;border-radius:50%;background:#3b352d}
+
+/* 対応 */
+.sources{text-align:center;padding:72px 0 24px}
+.label{font-size:12px;letter-spacing:.2em;color:var(--faint);font-weight:700}
+.chips{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;margin-top:18px}
+.chip{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 22px;font-weight:700}
+.chip small{display:block;font-weight:400;color:var(--faint);font-size:13px}
+.dot{width:10px;height:10px;border-radius:50%}
+
+section{padding:96px 0 0}
+.head{text-align:center;max-width:720px;margin:0 auto 56px}
+.head h2{font-size:clamp(28px,4vw,44px);margin:0 0 10px;font-weight:800;line-height:1.25}
+.head h2 .hl{color:var(--accent)}
+.head p{color:var(--dim);margin:0;font-size:17px}
+
+/* 機能 */
+.feature{display:grid;grid-template-columns:1fr 1.25fr;gap:56px;align-items:center;margin-bottom:110px}
+.feature.rev{grid-template-columns:1.25fr 1fr}
+.feature.rev .txt{order:2}
+.feature h3{font-size:28px;margin:0 0 12px;line-height:1.35}
+.feature p{color:var(--dim);margin:0 0 20px}
+.feature ul{list-style:none;padding:0;margin:0}
+.feature li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;color:var(--text)}
+.feature li svg{flex:none;width:18px;height:18px;margin-top:5px;color:var(--gold)}
+.feature .pic{position:relative}
+.feature .pic::before{content:"";position:absolute;inset:-6%;border-radius:28px;background:linear-gradient(135deg,rgba(231,181,78,.28),rgba(200,85,61,.22) 55%,rgba(110,90,200,.2));z-index:0}
+.feature .pic img{position:relative;z-index:1;border-radius:12px;border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+
+/* トレーラー */
+.trailer{max-width:960px;margin:0 auto}
+.video{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vtabs{display:flex;justify-content:center;gap:8px;margin-top:16px;flex-wrap:wrap}
+.vtabs button{background:var(--bg2);border:1px solid var(--line);color:var(--dim);border-radius:10px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer}
+.vtabs button.on{color:#1d1408;background:var(--gold);border-color:transparent;font-weight:700}
+.credit{text-align:center;color:var(--faint);font-size:13px;margin-top:10px}
+
+/* 比較表 */
+.cmp{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--bg2)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
+th,td{padding:14px 18px;text-align:center;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left;color:var(--text)}
+thead th{font-size:14px;color:var(--dim);font-weight:700;background:var(--panel)}
+thead th.us{color:var(--accent)}
+td.us{background:rgba(231,181,78,.06)}
+tr:last-child td{border-bottom:0}
+.y{color:#8fc46f;font-weight:700}.n{color:#c96a55}.p{color:var(--faint)}
+
+/* 使い方・FAQ */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:24px}
+.step .num{font-size:13px;font-weight:800;color:var(--gold);letter-spacing:.1em}
+.step h3{margin:6px 0 6px;font-size:19px}
+.step p{margin:0;color:var(--dim);font-size:15px}
+.faq{max-width:820px;margin:0 auto}
+details{border-bottom:1px solid var(--line);padding:18px 4px}
+summary{cursor:pointer;font-weight:700;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";color:var(--gold);font-weight:800}
+details[open] summary::after{content:"−"}
+details p{color:var(--dim);margin:10px 0 0}
+
+/* 最後 */
+.final{text-align:center;padding:110px 0 90px}
+.final h2{font-size:clamp(30px,4.5vw,48px);margin:0 0 8px;font-weight:800}
+.final p{color:var(--dim);margin:0}
+footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--faint);font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+
 html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
-@media (max-width:820px){
-  .hero{grid-template-columns:1fr;padding-top:28px}
-  .grid,.steps{grid-template-columns:1fr}
+
+@media (max-width:900px){
+  .links{display:none}
+  .feature,.feature.rev{grid-template-columns:1fr;gap:28px;margin-bottom:72px}
+  .feature.rev .txt{order:0}
+  .steps{grid-template-columns:1fr}
+  .hero{padding-top:56px}
+}
+@media (max-width:520px){
+  .dl-sm span.t{display:none}
+  .wrap{padding:0 16px}
 }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="top">
-    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 L20 10 L18 10 L18 30 L14 30 L14 10 L12 10 Z" fill="currentColor" style="color:var(--gold)"/><path d="M9 30h14" stroke="currentColor" style="color:var(--gold)" stroke-width="2"/></svg>
-    <span class="brand">SPIRE MOD MANAGER</span>
-    <span class="spacer"></span>
-    <button class="toggle" id="lang" type="button">English</button>
-  </header>
 
-  <div class="hero">
-    <div>
-      <div class="eyebrow">Slay the Spire 2 · Steam · Windows</div>
-      <h1 class="ja">MOD を、<em>かんたん</em>に。</h1>
-      <h1 class="en">Mods, <em>made easy</em>.</h1>
-      <p class="lead ja">Slay the Spire 2 の MOD をまとめて管理する無料のツールです。オン・オフの切り替え、前提 MOD の自動導入、エラーの原因と直し方の表示、MOD の組み合わせの保存まで、ボタンひとつで。</p>
-      <p class="lead en">A free tool to manage Slay the Spire 2 mods. Turn mods on and off, install requirements automatically, see what went wrong and how to fix it, and save mod setups — all in a click.</p>
-      <div class="cta">
-        <a class="btn primary" id="dl" href="https://github.com/soumaru0331/SpireModManager/releases/latest/download/SpireModManager.exe">
-          <span class="ja">ダウンロード</span><span class="en">Download</span> <small id="ver">Windows</small>
-        </a>
-        <a class="btn" href="https://github.com/soumaru0331/SpireModManager/releases"><span class="ja">これまでのバージョン</span><span class="en">All versions</span></a>
-      </div>
-      <div class="meta"><span class="ja">無料 ・ Windows 10 / 11 ・ インストール不要（exe を開くだけ）・ 自動アップデート</span><span class="en">Free · Windows 10 / 11 · No install (just open the exe) · Auto-updates</span><span id="date"></span></div>
+<nav class="nav">
+  <div class="wrap">
+    <a class="logo" href="#"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 L20 10 L18 10 L18 30 L14 30 L14 10 L12 10 Z" fill="currentColor"/><path d="M9 30h14" stroke="currentColor" stroke-width="2"/></svg>Spire Mod Manager</a>
+    <div class="links">
+      <a href="#features"><span class="ja">機能</span><span class="en">Features</span></a>
+      <a href="#trailer"><span class="ja">トレーラー</span><span class="en">Trailer</span></a>
+      <a href="#how"><span class="ja">使い方</span><span class="en">How to</span></a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/soumaru0331/SpireModManager">GitHub</a>
     </div>
-    <div class="card preview" aria-hidden="true">
-      <div class="pv-head"><span class="pv-pill on">● <span class="ja">安定版</span><span class="en">Stable</span></span><span class="pv-pill"><span class="ja">プロファイル: いつもの</span><span class="en">Profile: Usual</span></span></div>
-      <div class="pv-row"><div class="pv-ic">B</div><div class="pv-name">BaseLib<span class="ja">前提 MOD（自動で入りました）</span><span class="en">Requirement (installed automatically)</span></div><div class="sw"></div></div>
-      <div class="pv-row"><div class="pv-ic">M</div><div class="pv-name">Minty Spire 2<span class="ja">日本語化済み</span><span class="en">Japanese added</span></div><div class="sw"></div></div>
-      <div class="pv-row"><div class="pv-ic">A</div><div class="pv-name">Acts from the Past<span class="ja">ベータ版用</span><span class="en">For beta</span></div><div class="sw off"></div></div>
-      <div class="pv-note ja">このバージョンでは動かない MOD がオンです → 「オフにして起動」</div>
-      <div class="pv-note en">A mod that's on won't work on this version → "Turn off and launch"</div>
+    <span class="sp"></span>
+    <button class="lang" id="lang" type="button">English</button>
+    <a class="dl-sm dl-link" href="https://github.com/soumaru0331/SpireModManager/releases/latest/download/SpireModManager.exe">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.5 4.4v7.1H3zm8.5-1.2L21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zm8.5 0H21V21l-9.5-1.3z"/></svg><span class="t ja">ダウンロード</span><span class="t en">Download</span>
+    </a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1 class="ja">Slay the Spire 2 の<br><span class="hl">MOD マネージャー</span></h1>
+    <h1 class="en">The <span class="hl">mod manager</span><br>for Slay the Spire 2</h1>
+    <p class="ja">Workshop と Nexus Mods から 1 クリックで導入。前提 MOD は自動で入り、動かないときは原因と直し方を教えてくれます。無料です。</p>
+    <p class="en">Install from Workshop and Nexus Mods in one click. Requirements install themselves, and when something breaks it tells you why and how to fix it. Free.</p>
+    <a class="dl dl-link" href="https://github.com/soumaru0331/SpireModManager/releases/latest/download/SpireModManager.exe">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.5 4.4v7.1H3zm8.5-1.2L21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zm8.5 0H21V21l-9.5-1.3z"/></svg>
+      <span class="ja">Windows 版をダウンロード</span><span class="en">Download for Windows</span>
+    </a>
+    <div class="ver"><b class="verno">最新版</b> &nbsp;|&nbsp; Windows 10+ &nbsp;|&nbsp; <span class="ja">インストール不要</span><span class="en">No install</span></div>
+    <div class="shot">
+      <div class="frame"><div class="bar"><i></i><i></i><i></i></div><img src="img/mods.png" alt="Spire Mod Manager の MOD 一覧画面" width="1920" height="1200"></div>
+    </div>
+  </div>
+</header>
+
+<div class="sources">
+  <div class="wrap">
+    <div class="label ja">ここから MOD を入れられます</div><div class="label en">INSTALL MODS FROM</div>
+    <div class="chips">
+      <div class="chip"><span class="dot" style="background:#66c0f4"></span><div>Steam Workshop<small class="ja">サブスクも自動</small><small class="en">Subscribes for you</small></div></div>
+      <div class="chip"><span class="dot" style="background:#d98f40"></span><div>Nexus Mods<small class="ja">API キー不要</small><small class="en">No API key needed</small></div></div>
+      <div class="chip"><span class="dot" style="background:var(--faint)"></span><div>zip / 7z / rar<small class="ja">ドラッグ＆ドロップ</small><small class="en">Drag & drop</small></div></div>
     </div>
   </div>
 </div>
 
-<section>
+<section id="features">
   <div class="wrap">
-    <h2 class="ja">できること</h2><h2 class="en">What it does</h2>
-    <p class="sub ja">MOD を入れて遊ぶときの「めんどう」と「なんで動かないの？」をまとめて片付けます。</p>
-    <p class="sub en">Takes care of the chores — and the "why won't it work?" — of playing with mods.</p>
-    <div class="grid">
-      <div class="card feat"><div class="ico">🔌</div><h3 class="ja">オン・オフ & 前提 MOD 自動導入</h3><h3 class="en">On/off & auto requirements</h3><p class="ja">スイッチで切り替えるだけ。足りない前提 MOD は Workshop から自動で入れます。</p><p class="en">Flip a switch. Missing requirements are installed from Workshop automatically.</p></div>
-      <div class="card feat"><div class="ico">🩺</div><h3 class="ja">エラー診断</h3><h3 class="en">Error diagnosis</h3><p class="ja">ゲームの記録を読んで、何が原因でどう直せばいいかを日本語で表示します。</p><p class="en">Reads the game's log and tells you what's wrong and how to fix it.</p></div>
-      <div class="card feat"><div class="ico">🗂️</div><h3 class="ja">プロファイル & 共有コード</h3><h3 class="en">Profiles & share codes</h3><p class="ja">MOD の組み合わせを保存して選んで起動。共有コードで友達と同じ MOD にそろえられます。</p><p class="en">Save setups and launch them. Share codes get friends onto the same mods.</p></div>
-      <div class="card feat"><div class="ico">🔍</div><h3 class="ja">MOD を探す・入れる</h3><h3 class="en">Find & install</h3><p class="ja">Workshop と Nexus Mods をまとめて検索。zip / 7z / rar はドラッグ＆ドロップで入ります。</p><p class="en">Search Workshop and Nexus Mods together. Drop zip / 7z / rar to install.</p></div>
-      <div class="card feat"><div class="ico">🇯🇵</div><h3 class="ja">MOD の日本語化</h3><h3 class="en">Japanese translation</h3><p class="ja">日本語に対応していない MOD の文章を、ゲーム公式の用語にそろえて自動で訳します。</p><p class="en">Automatically translates mods that lack Japanese, using the game's official terms.</p></div>
-      <div class="card feat"><div class="ico">🛡️</div><h3 class="ja">セーブの自動バックアップ</h3><h3 class="en">Automatic save backups</h3><p class="ja">起動のたびにセーブを丸ごとバックアップ。MOD 用セーブのキャラ解放もできます。</p><p class="en">Backs up all saves before every launch. Can also unlock characters in the modded save.</p></div>
-      <div class="card feat"><div class="ico">🔀</div><h3 class="ja">安定版 ⇔ ベータ版をすぐ切り替え</h3><h3 class="en">Stable ⇔ beta instantly</h3><p class="ja">一度とっておけば、次からダウンロードなしで切り替え。どちらでも Steam の招待・マルチが使えます。</p><p class="en">Once kept, switch without downloading. Steam invites and multiplayer work on both.</p></div>
-      <div class="card feat"><div class="ico">⬆️</div><h3 class="ja">自動アップデート</h3><h3 class="en">Auto-update</h3><p class="ja">新しいバージョンが出ると画面に「更新する」が出ます。押すだけで入れ替わります。</p><p class="en">When a new version is out, press "Update" — it replaces itself.</p></div>
-      <div class="card feat"><div class="ico">🧭</div><h3 class="ja">ゲームを自動で見つける</h3><h3 class="en">Finds your game</h3><p class="ja">Steam のライブラリから自動で探します。見つからないときはフォルダを選ぶだけ。</p><p class="en">Finds the game in your Steam libraries. If not, just pick the folder.</p></div>
+    <div class="head">
+      <h2 class="ja"><span class="hl">めんどう</span>は全部おまかせ</h2><h2 class="en">The chores, <span class="hl">handled</span></h2>
+      <p class="ja">MOD を入れて遊ぶときの「手間」と「なんで動かないの？」を片付けます。</p>
+      <p class="en">All the busywork — and the "why won't it run?" — taken care of.</p>
+    </div>
+
+    <div class="feature">
+      <div class="txt">
+        <h3 class="ja">スイッチ 1 つで MOD をオン・オフ</h3><h3 class="en">Turn mods on and off with a switch</h3>
+        <p class="ja">入っている MOD が一覧で見られます。足りない前提 MOD は Steam Workshop から自動で入れて、自動でオンにします。</p>
+        <p class="en">See every mod you have. Missing requirements are pulled from Steam Workshop and switched on for you.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">前提 MOD は自動で導入</span><span class="en">Requirements installed automatically</span></li>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">日本語がない MOD も自動で日本語化</span><span class="en">Mods without Japanese get translated</span></li>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">動かない MOD は起動前に教えてくれる</span><span class="en">Warns you before launch if a mod won't run</span></li>
+        </ul>
+      </div>
+      <div class="pic"><img src="img/mods.png" alt="" loading="lazy" width="1920" height="1200"></div>
+    </div>
+
+    <div class="feature rev">
+      <div class="txt">
+        <h3 class="ja">探して、1 クリックで入れる</h3><h3 class="en">Find it, install it in one click</h3>
+        <p class="ja">Steam Workshop と Nexus Mods をまとめて検索。説明文は日本語に訳して表示します。</p>
+        <p class="en">Search Steam Workshop and Nexus Mods together, with descriptions translated into Japanese.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">2 つのサイトを一度に検索</span><span class="en">Both sites in one search</span></li>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">Nexus のダウンロードも自動で導入</span><span class="en">Nexus downloads install themselves</span></li>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">入れた MOD の更新もお知らせ</span><span class="en">Tells you when installed mods update</span></li>
+        </ul>
+      </div>
+      <div class="pic"><img src="img/find.png" alt="" loading="lazy" width="1920" height="1200"></div>
+    </div>
+
+    <div class="feature">
+      <div class="txt">
+        <h3 class="ja">友達と同じ MOD で、すぐマルチ</h3><h3 class="en">Same mods as your friends, instantly</h3>
+        <p class="ja">MOD の組み合わせをプロファイルに保存。共有コードを送れば、友達も同じ構成に 1 回でそろいます。</p>
+        <p class="en">Save mod setups as profiles. Send a share code and your friends match your setup in one go.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">プロファイルを選んで起動</span><span class="en">Pick a profile and launch</span></li>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">共有コードで足りない MOD を自動で入れる</span><span class="en">Share codes install what's missing</span></li>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">ゲームが選んだ構成で起動したか確認</span><span class="en">Checks the game loaded what you picked</span></li>
+        </ul>
+      </div>
+      <div class="pic"><img src="img/profiles.png" alt="" loading="lazy" width="1920" height="1200"></div>
+    </div>
+
+    <div class="feature rev">
+      <div class="txt">
+        <h3 class="ja">安定版 ⇔ ベータ版を、ダウンロードなしで</h3><h3 class="en">Stable ⇔ beta, without downloading</h3>
+        <p class="ja">一度とっておいたバージョンには一瞬で切り替え。Steam の招待もそのまま使えるので、どちらのバージョンでも友達とマルチできます。</p>
+        <p class="en">Switch to a kept version in an instant. Steam invites keep working, so you can play multiplayer on either version.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">切り替えは数秒</span><span class="en">Switches in seconds</span></li>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">ベータ版専用の MOD もそのまま動く</span><span class="en">Beta-only mods still work</span></li>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">更新が出たら知らせてくれる</span><span class="en">Tells you when a version updates</span></li>
+        </ul>
+      </div>
+      <div class="pic"><img src="img/switch.png" alt="" loading="lazy" width="1920" height="1200"></div>
+    </div>
+
+    <div class="feature">
+      <div class="txt">
+        <h3 class="ja">セーブは自動で守る</h3><h3 class="en">Your saves, protected</h3>
+        <p class="ja">起動のたびにセーブを丸ごとバックアップして、いつでも戻せます。MOD 用セーブでキャラが初期状態に戻っていても、ボタンで解放できます。</p>
+        <p class="en">Every launch backs up all your saves, ready to restore. If the modded save shows characters locked again, unlock them with a button.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">最初のバックアップはずっと保存</span><span class="en">The first backup is kept forever</span></li>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">バニラの解放状況を MOD 側へ引き継ぎ</span><span class="en">Copies vanilla unlocks to the modded save</span></li>
+          <li><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" d="m4 12 5 5L20 6"/></svg><span class="ja">Steam クラウドにもちゃんと反映</span><span class="en">Synced with Steam Cloud</span></li>
+        </ul>
+      </div>
+      <div class="pic"><img src="img/saves.png" alt="" loading="lazy" width="1920" height="1200"></div>
+    </div>
+  </div>
+</section>
+
+<section id="trailer">
+  <div class="wrap">
+    <div class="head">
+      <h2>Slay the Spire 2</h2>
+      <p class="ja">公式トレーラー</p><p class="en">Official trailers</p>
+    </div>
+    <div class="trailer">
+      <div class="video"><iframe id="yt" src="https://www.youtube-nocookie.com/embed/PW22jwFNxU8" title="Slay the Spire 2 official trailer" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+      <div class="vtabs">
+        <button class="on" data-v="PW22jwFNxU8"><span class="ja">早期アクセス</span><span class="en">Early Access</span></button>
+        <button data-v="ttVtllHkb4E"><span class="ja">ゲームプレイ</span><span class="en">Gameplay</span></button>
+        <button data-v="krDFltgjLtE"><span class="ja">発表</span><span class="en">Reveal</span></button>
+      </div>
+      <div class="credit">© Mega Crit</div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2 class="ja">使い方</h2><h2 class="en">How to use</h2>
-    <p class="sub ja">インストールはいりません。</p><p class="sub en">No installation needed.</p>
+    <div class="head">
+      <h2 class="ja">手作業と比べると</h2><h2 class="en">Compared to doing it by hand</h2>
+    </div>
+    <div class="cmp">
+      <table>
+        <thead><tr><th></th><th class="us">Spire Mod Manager</th><th class="ja">Workshop だけ</th><th class="en">Workshop only</th><th class="ja">手で入れる</th><th class="en">By hand</th></tr></thead>
+        <tbody>
+          <tr><td class="ja">前提 MOD の自動導入</td><td class="en">Auto-install requirements</td><td class="us y">○</td><td class="p">△</td><td class="n">×</td></tr>
+          <tr><td class="ja">Nexus Mods から導入</td><td class="en">Install from Nexus Mods</td><td class="us y">○</td><td class="n">×</td><td class="p">△</td></tr>
+          <tr><td class="ja">エラーの原因と直し方</td><td class="en">Error causes and fixes</td><td class="us y">○</td><td class="n">×</td><td class="n">×</td></tr>
+          <tr><td class="ja">MOD の組み合わせを保存・共有</td><td class="en">Save and share setups</td><td class="us y">○</td><td class="n">×</td><td class="n">×</td></tr>
+          <tr><td class="ja">MOD の日本語化</td><td class="en">Japanese translation</td><td class="us y">○</td><td class="n">×</td><td class="n">×</td></tr>
+          <tr><td class="ja">セーブの自動バックアップ</td><td class="en">Automatic save backups</td><td class="us y">○</td><td class="n">×</td><td class="n">×</td></tr>
+          <tr><td class="ja">安定版 ⇔ ベータ版をダウンロードなしで</td><td class="en">Stable ⇔ beta without downloading</td><td class="us y">○</td><td class="n">×</td><td class="n">×</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="head"><h2 class="ja">使い方</h2><h2 class="en">Getting started</h2><p class="ja">インストールはいりません。</p><p class="en">No installation.</p></div>
     <div class="steps">
-      <div class="card step"><h3 class="ja">ダウンロード</h3><h3 class="en">Download</h3><p class="ja">上のボタンから SpireModManager.exe を保存します。</p><p class="en">Save SpireModManager.exe with the button above.</p></div>
-      <div class="card step"><h3 class="ja">開く</h3><h3 class="en">Open it</h3><p class="ja">「WindowsによってPCが保護されました」と出たら「詳細情報」→「実行」。個人が作ったソフトなので出ることがあります。</p><p class="en">If "Windows protected your PC" appears, click "More info" → "Run anyway". It shows for small personal apps.</p></div>
-      <div class="card step"><h3 class="ja">あとはおまかせ</h3><h3 class="en">That's it</h3><p class="ja">ゲームを見つけて、最初のバックアップも自動で取ります。MOD を選んで「起動」。</p><p class="en">It finds the game and takes the first backup by itself. Pick your mods and press Launch.</p></div>
+      <div class="step"><div class="num">STEP 1</div><h3 class="ja">ダウンロード</h3><h3 class="en">Download</h3><p class="ja">SpireModManager.exe を保存します。</p><p class="en">Save SpireModManager.exe.</p></div>
+      <div class="step"><div class="num">STEP 2</div><h3 class="ja">開く</h3><h3 class="en">Open</h3><p class="ja">「WindowsによってPCが保護されました」と出たら「詳細情報」→「実行」。</p><p class="en">If "Windows protected your PC" shows, click "More info" → "Run anyway".</p></div>
+      <div class="step"><div class="num">STEP 3</div><h3 class="ja">遊ぶ</h3><h3 class="en">Play</h3><p class="ja">ゲームは自動で見つかります。MOD を選んで「起動」。</p><p class="en">It finds the game for you. Pick mods and press Launch.</p></div>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <h2 class="ja">最新バージョンの変更点</h2><h2 class="en">What's new</h2>
-    <div class="card notes" id="notes"><span class="ja">読み込み中…（読み込めないときは「これまでのバージョン」から見られます）</span><span class="en">Loading… (or see "All versions")</span></div>
+<section id="faq">
+  <div class="wrap faq">
+    <div class="head"><h2>FAQ</h2></div>
+    <details><summary class="ja">バニラ（MOD なし）のセーブは大丈夫？</summary><summary class="en">Is my vanilla save safe?</summary>
+      <p class="ja">大丈夫です。ゲームは MOD 入りのセーブを別の場所に保存します。さらに起動のたびにセーブ全体をバックアップしているので、いつでも戻せます。</p>
+      <p class="en">Yes. The game keeps modded saves separately, and every launch backs up all saves so you can always go back.</p></details>
+    <details><summary class="ja">ウイルス対策ソフトに止められた</summary><summary class="en">My antivirus blocked it</summary>
+      <p class="ja">個人が作った署名なしのソフトなので、止められることがあります。保存したフォルダを例外に追加してください。</p>
+      <p class="en">Unsigned personal apps sometimes get flagged. Add the folder to your antivirus exceptions.</p></details>
+    <details><summary class="ja">「Slay the Spire 2 が見つかりません」と出る</summary><summary class="en">It can't find Slay the Spire 2</summary>
+      <p class="ja">画面の「ゲームのフォルダを指定する」からフォルダを選んでください。それでもダメなときは「診断情報をコピー」して作者に送ってください。</p>
+      <p class="en">Use "Choose the game folder". If that doesn't help, use "Copy diagnostic info" and send it to the author.</p></details>
+    <details><summary class="ja">アップデートは？</summary><summary class="en">How do updates work?</summary>
+      <p class="ja">新しいバージョンが出ると画面の上に「更新する」が出ます。押すだけで入れ替わります。</p>
+      <p class="en">When a new version is out, an "Update" button appears at the top. Press it and it replaces itself.</p></details>
+    <details><summary class="ja">消したいときは？</summary><summary class="en">How do I uninstall?</summary>
+      <p class="ja">exe を消すだけです。設定とバックアップは %LOCALAPPDATA%\SpireModManager にあります。</p>
+      <p class="en">Delete the exe. Settings and backups are in %LOCALAPPDATA%\SpireModManager.</p></details>
   </div>
 </section>
 
-<section>
+<div class="final">
   <div class="wrap">
-    <h2 class="ja">よくある質問</h2><h2 class="en">FAQ</h2>
-    <details><summary class="ja">バニラ（MOD なし）のセーブは大丈夫？</summary><summary class="en">Is my vanilla (no-mod) save safe?</summary>
-      <p class="ja">はい。ゲームは MOD 入りのセーブを別の場所に保存します。さらにこのツールは起動のたびにセーブ全体をバックアップし、いつでも戻せます。</p>
-      <p class="en">Yes. The game keeps modded saves separately, and this tool backs up all saves before every launch so you can restore anytime.</p></details>
-    <details><summary class="ja">ウイルス対策ソフトに止められた</summary><summary class="en">My antivirus blocked it</summary>
-      <p class="ja">個人が作った署名なしのソフトなので、止められることがあります。保存したフォルダを例外に追加してください。中身は GitHub の Releases で公開しています。</p>
-      <p class="en">Unsigned personal apps can get flagged. Add the folder to your antivirus exceptions. Builds are published on GitHub Releases.</p></details>
-    <details><summary class="ja">「Slay the Spire 2 が見つかりません」と出る</summary><summary class="en">It says it can't find Slay the Spire 2</summary>
-      <p class="ja">画面の「ゲームのフォルダを指定する」から、Slay the Spire 2 のフォルダを選んでください。それでもダメなら「診断情報をコピー」して作者に送ってください。</p>
-      <p class="en">Use "Choose the game folder" and pick the Slay the Spire 2 folder. If that fails, use "Copy diagnostic info" and send it to the author.</p></details>
-    <details><summary class="ja">消したいときは？</summary><summary class="en">How do I remove it?</summary>
-      <p class="ja">exe を消すだけです。設定やバックアップは %LOCALAPPDATA%\SpireModManager にあります（いらなければ消してください）。</p>
-      <p class="en">Just delete the exe. Settings and backups live in %LOCALAPPDATA%\SpireModManager (delete it if you don't need them).</p></details>
+    <h2 class="ja">さっそく使ってみる</h2><h2 class="en">Give it a try</h2>
+    <p class="ja">無料です。1 分で使い始められます。</p><p class="en">Free. Up and running in a minute.</p>
+    <a class="dl dl-link" href="https://github.com/soumaru0331/SpireModManager/releases/latest/download/SpireModManager.exe">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.5 4.4v7.1H3zm8.5-1.2L21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zm8.5 0H21V21l-9.5-1.3z"/></svg>
+      <span class="ja">Windows 版をダウンロード</span><span class="en">Download for Windows</span>
+    </a>
+    <div class="ver"><b class="verno">最新版</b></div>
   </div>
-</section>
+</div>
 
 <footer>
   <div class="wrap">
-    <span class="ja">作者: えす ・ 非公式のファンツールです。Mega Crit 社とは関係ありません。Slay the Spire は Mega Crit の商標です。</span>
+    <span class="ja">作者: えす ・ 非公式のファンツールです。Mega Crit とは関係ありません。Slay the Spire は Mega Crit の商標です。</span>
     <span class="en">By esu · An unofficial fan tool, not affiliated with Mega Crit. Slay the Spire is a trademark of Mega Crit.</span>
-    · <a href="https://github.com/soumaru0331/SpireModManager">GitHub</a>
+    <a href="https://github.com/soumaru0331/SpireModManager/releases"><span class="ja">これまでのバージョン</span><span class="en">All versions</span></a>
   </div>
 </footer>
 
 <script>
-// 言語: ブラウザが日本語以外なら英語で。ボタンで切り替え（覚えておく）
 (function(){
   let lang = null;
   try { lang = localStorage.getItem("smm_lang"); } catch {}
@@ -194,23 +363,17 @@ html[lang="ja"] .en, html[lang="en"] .ja{display:none!important}
   apply(lang);
   document.getElementById("lang").onclick = () => { lang = lang === "ja" ? "en" : "ja"; apply(lang); try { localStorage.setItem("smm_lang", lang); } catch {} };
 })();
-
-// 最新バージョンの番号・日付・変更点を GitHub から読む（読めなくてもボタンは動く）
+document.querySelectorAll(".vtabs button").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".vtabs button").forEach(x => x.classList.toggle("on", x === b));
+  document.getElementById("yt").src = "https://www.youtube-nocookie.com/embed/" + b.dataset.v;
+});
 fetch("https://api.github.com/repos/soumaru0331/SpireModManager/releases/latest", {headers:{Accept:"application/vnd.github+json"}})
   .then(r => r.ok ? r.json() : Promise.reject(r.status))
   .then(rel => {
-    document.getElementById("ver").textContent = rel.tag_name + " · Windows";
-    const d = new Date(rel.published_at);
-    document.getElementById("date").textContent = " ・ " + d.toLocaleDateString(document.documentElement.lang === "ja" ? "ja-JP" : "en-US");
+    document.querySelectorAll(".verno").forEach(e => e.textContent = rel.tag_name);
     const exe = (rel.assets || []).find(a => a.name === "SpireModManager.exe");
-    if (exe) document.getElementById("dl").href = exe.browser_download_url;
-    const body = (rel.body || "").split("\n").filter(l => !/^\s*sha256/i.test(l) && !/\.zip/.test(l)).join("\n").trim();
-    const box = document.getElementById("notes");
-    box.textContent = "";
-    const b = document.createElement("b"); b.textContent = rel.tag_name + "\n"; box.appendChild(b);
-    box.appendChild(document.createTextNode(body || "—"));
-  })
-  .catch(() => {});
+    if (exe) document.querySelectorAll(".dl-link").forEach(a => a.href = exe.browser_download_url);
+  }).catch(() => {});
 </script>
 </body>
 </html>
