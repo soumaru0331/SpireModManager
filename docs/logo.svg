@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 積み木（ツミキ）: 下に四角を 2 つ、長い板、四角、てっぺんに三角 -->
+  <rect x="9" y="42" width="20" height="18" rx="2.5" fill="#e7b54e"/>
+  <rect x="9" y="55" width="20" height="5" rx="2" fill="#b9862c"/>
+  <rect x="35" y="42" width="20" height="18" rx="2.5" fill="#d4573f"/>
+  <rect x="35" y="55" width="20" height="5" rx="2" fill="#a83e2b"/>
+  <rect x="5" y="32" width="54" height="9" rx="2.5" fill="#f3e6cf"/>
+  <rect x="5" y="37.5" width="54" height="3.5" rx="1.75" fill="#cdbb9b"/>
+  <rect x="23" y="16" width="18" height="15" rx="2.5" fill="#e7b54e"/>
+  <rect x="23" y="27" width="18" height="4" rx="2" fill="#b9862c"/>
+  <path d="M32 3 L42 15 H22 Z" fill="#d4573f" stroke="#d4573f" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M32 3 L42 15 H32 Z" fill="#a83e2b"/>
+</svg>
